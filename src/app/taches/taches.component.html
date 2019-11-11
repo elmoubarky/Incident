@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Unhcr Taches</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <p></p>
+  <p></p>
+  <div class="container">
+    <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Gestion des Taches - Declaration des Incidents</h2>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      Le menu permet de pourvoir declarer un incident mais aussi
+      modifier les incidents existant dans la liste ci dessous</p>
+    <p></p>
+    <p></p>
+    <div class=" text-center">
+      <button class="btn btn-success" (click)="onNewTache()">+ Declarer un Incident</button>
+    </div>
+    <p></p>
+    <div *ngIf="mode=='new-tache'" >
+      
+      <p></p>
+      <h3 class="text-center"> Renseigner les informations de l'incident</h3>
+      <p></p>
+      <p></p>
+      <form #f="ngForm" (ngSubmit)="onSaveTache(f.value)" class="col-md-6">
+        <div class="form-group">
+          <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+          <label name="control-label">Username</label>
+          <input name="username2" ngModel class="form-control" [(ngModel)]="username" disabled>
+          <p></p>
+          <label name="control-label">Nature</label>
+          <input style="width: 500px" type="text" name="nature" ngModel class="form-control">
+          <label name="control-label">Type</label>
+          <input style="width: 500px" type="text" name="type" ngModel class="form-control">
+          <label name="control-label">Priorite</label>
+          <select style="width: 500px" name="priorite" ngModel class="form-control" id="priorite">
+            <option>MINEUR</option>
+            <option>MAJEUR</option>
+          </select>
+          <label name="control-label">Equipement</label>
+          <select style="width: 500px"  name="equipement" ngModel class="form-control"
+            id="equipement">
+            <option *ngFor="let a of assets">{{a.serialId}}</option>
+          </select>
+        </div>
+        <td>
+            <button class="btn btn-success" type="submit">Save</button>
+        </td>
+        <td>
+            <button class="btn btn-success" (click)="onReturn()">Retour</button>
+        </td>
+      </form>
+     
+    </div>
+    <p></p>
+    <p></p>
+    <p></p>
+    <p></p>
+    <div *ngIf="mode=='edit-tache'" class="d-flex justify-content-center align-items-center">
+      <form #f="ngForm" (ngSubmit)="onUpdateTache(f.value)">
+        <div class="form-group" style="width: 500px">
+          <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+        </div>
+        <div class="form-group">
+          <!-- <label name="control-label" >Numero</label> -->
+          <input type="hidden" name="numeroTache" ngModel class="form-control" [(ngModel)]="currentTaches.numeroTache">
+        </div>
+        <div class="form-group">
+          <label name="control-label">Nature</label>
+          <input type="text" name="nature" ngModel class="form-control" [(ngModel)]="currentTaches.nature">
+        </div>
+        <div class="form-group">
+          <label name="control-label">Type</label>
+          <input type="text" name="type" ngModel class="form-control" [(ngModel)]="currentTaches.type">
+        </div>
+        <div class="form-group">
+            <label name="control-label">Priorite</label>
+            <select name="priorite" ngModel class="form-control" [(ngModel)]="currentTaches.priorite">
+                <option>MINEUR</option>
+                <option>MAJEUR</option>
+            </select>
+        </div>
+        <button class="btn btn-success" type="submit">Update</button>
+        <label for="">&nbsp;&nbsp;</label>
+        <button class="btn btn-success" (click)="onReturn()">Retour</button>
+      </form>
+    </div>
+    <p></p>
+    <div *ngIf="mode=='list' || mode=='rech'">
+      <div class=" text-center">
+        <h5>Liste des differents exports pouvant etre fait</h5>
+        <button class="btn btn-success" (click)="download()"> Export CSV </button>
+        <label for="">&nbsp;&nbsp;&nbsp;</label>
+        <button class="btn btn-success" (click)="exportAsXLSX()"> Export Excel </button>
+        <label for="">&nbsp;&nbsp;&nbsp;</label>
+        <button class="btn btn-success" (click)="download()"> Export PDF </button>
+      </div>
+      <p></p>
+      <p></p>
+      <form #f="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onRech(f.value)">
+        <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        </label>
+        <input type="text" ngModel name="searchValue" class="form-control" placeholder="Search element"
+          aria-label="Search">
+        <label>&nbsp;&nbsp;&nbsp;</label>
+        <div class="form-group ">
+          <select name="optionValue" ngModel class="form-control" id="optionValue">
+            <option>Numero</option>
+            <option>Type</option>
+            <option>Staff</option>
+            <option>Nature</option>
+            <option>Custodian</option>
+            <option>Bureau</option>
+          </select>
+        </div>
+        <label>&nbsp;&nbsp;&nbsp;</label>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>
+      <p></p>
+      <p></p>
+      <div class="text-center">
+        <h2>Liste des Incidents</h2>
+      </div>
+      <p></p>
+      <p></p>
+      <table class="table table-responsive-xxl table-dark table-striped col-md-6">
+        <thead>
+          <tr>
+            <th>Numero</th>
+            <th>Nature</th>
+            <th>Type</th>
+            <th>Date Creation</th>
+            <th>Status</th>
+            <th>Priorite</th>
+            <th>Staff</th>
+            <th>Date Cloture</th>
+            <th>Methode resolution</th>
+            <th>Equipement</th>
+            <th>Username</th>
+            <!-- <th>QR Code</th> -->
+          </tr>
+        </thead>
+        <tbody *ngIf="mode=='list'">
+          <tr *ngFor="let t of taches | paginate: { itemsPerPage: count, currentPage: p }">
+            <td>{{t.numeroTache}}</td>
+            <td>{{t.nature}}</td>
+            <td>{{t.type}}</td>
+            <td>{{t.dateCreation}}</td>
+            <td>{{t.status}}</td>
+            <td>{{t.priorite}}</td>
+            <td>{{t.staff}}</td>
+            <td>{{t.dateCloture}}</td>
+            <td style="width:300px; ">{{t.resolvedMethode}}</td>
+            <td>{{t.equipement}}</td>
+            <td>{{t.username}}</td>
+            <!-- <td>
+              <img src="assets/images/{{t.numeroTache}}.png" width="100" height="100">
+            </td> -->
+            <td>
+              <button type="button" class="btn btn-danger" (click)="onDeleteTache(t)">Del</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="onEditTache(t)">Edit</button>
+            </td>
+          </tr>
+
+        </tbody>
+        <tbody *ngIf="mode=='rech'">
+          <tr *ngFor="let t of taches | paginate: { itemsPerPage: count, currentPage: p }">
+            <td>{{t.numeroTache}}</td>
+            <td>{{t.nature}}</td>
+            <td>{{t.type}}</td>
+            <td>{{t.dateCreation}}</td>
+            <td>{{t.status}}</td>
+            <td>{{t.priorite}}</td>
+            <td>{{t.staff}}</td>
+            <td>{{t.dateCloture}}</td>
+            <td style="width:300px; ">{{t.resolvedMethode}}</td>
+            <td>{{t.equipement}}</td>
+            <td>{{t.username}}</td>
+            <!-- <td>
+              <img src="assets/images/{{t.numeroTache}}.png" width="100" height="100">
+            </td> -->
+            <td>
+              <button type="button" class="btn btn-danger" (click)="onDeleteTache(t)">Del</button>
+            </td>
+            <td>
+              <button type="button" class="btn btn-success" (click)="onEditTache(t)">Edit</button>
+            </td>
+          </tr>
+
+        </tbody>
+      </table>
+      <!--Including the pagination control.-->
+      <div class="text-right">
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

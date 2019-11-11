@@ -1,0 +1,36 @@
+<div class="container text-center">
+  <p></p>
+  <p></p>
+  <!-- <H4>Afficher les Statistiques en fonction des dates</H4> -->
+  <p></p>
+  <p></p>
+  
+  <!-- <form #f="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onRechDate(f.value)">
+    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    </label>
+    <div class="form-group ">
+      <label>&nbsp;&nbsp;Date debut : &nbsp;&nbsp;</label>
+      <input ngModel type="date" name="date1" max="3000-12-31" min="1800-01-01" class="form-control"
+       required>
+    </div>
+    <label>&nbsp;&nbsp;</label>
+    <div class="form-group ">
+      <label>&nbsp;&nbsp;Date Fin : &nbsp;&nbsp;</label>
+      <input ngModel type="date" name="date2" max="3000-12-31" min="1800-01-01" class="form-control"
+      required>
+    </div>
+    <label>&nbsp;&nbsp;&nbsp;</label>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Bar by Dates</button>
+  </form> -->
+  <div >
+    <label for="">&nbsp;&nbsp;&nbsp;&nbsp;</label>
+    <div style="display: block" class="text-center">
+      <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+        [legend]="barChartLegend" [chartType]="barChartType">
+      </canvas>
+    </div>
+  </div>
+</div>

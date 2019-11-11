@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Unhcr Configuration</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+  <p></p>
+  <p></p>
+  <div class="container ">
+    <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Configuration Serveur</h2>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        Le menu permet de pourvoir gerer les configurations serveur</p>
+    <p></p>
+    <p></p>
+    <div class="text-center">
+      <button class="btn btn-success" (click)="onServDefinition()">+ Definir les serveurs</button>
+    </div>
+    <p></p>
+    <div *ngIf="mode=='new-serv'" class="d-flex justify-content-center align-items-center">
+      <form #f="ngForm" (ngSubmit)="onSaveServ(f.value)">
+        <div class="form-group">
+          <label name="control-label">Name</label>
+          <input type="text" style="width: 700px" name="name" ngModel class="form-control">
+          <label name="control-label">Port</label>
+          <input type="text" name="port" ngModel class="form-control">
+          <label name="control-label">Url</label>
+          <input type="text" name="url" ngModel class="form-control">
+          <label name="control-label">Description</label>
+          <input type="text" name="description" ngModel class="form-control">
+        </div>
+        <td>
+          <button class="btn btn-success" type="submit">Save</button>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <button class="btn btn-success" (click)="onReturn()">Retour</button>
+        </td>
+      </form>
+    </div>
+    <p></p>
+    <div  *ngIf="mode=='new-userv-def'" class="d-flex justify-content-center align-items-center">
+      <form #f="ngForm" (ngSubmit)="onSaveServ(f.value)">
+        <h3>Definir les serveurs pour l'application</h3>
+        <p></p>
+        <p></p>
+        <div class="form-group">
+          <label name="control-label">Serveur Name</label>
+          <select style="width: 500px" name="name" ngModel class="form-control" id="username">
+            <option>INCIDENT</option>
+            <option>SECURITY</option>
+          </select>
+          <label name="control-label">Serveur Ip</label>
+          <input type="text" name="url" ngModel class="form-control">
+          <label name="control-label">Serveur Port</label>
+          <input type="text" name="port" ngModel class="form-control">
+          <label name="control-label">Description</label>
+          <input type="text" name="description" ngModel class="form-control">
+        </div>
+        <td>
+          <button class="btn btn-success" type="submit">Save</button>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <button class="btn btn-success" (click)="onReturn()">Retour</button>
+        </td>
+      </form>
+    </div>
+    <p></p>
+    <!-- <div *ngIf="mode=='edit-user'" class="col-md-9">
+      <form #f="ngForm" (ngSubmit)="onUpdateUser(f.value)">
+        <div class="form-group">
+          <label name="control-label">Username</label>
+          <input type="text" name="username" ngModel class="form-control" [(ngModel)]="currentUsers.username">
+        </div>
+        <div class="form-group">
+          <label name="control-label">Email</label>
+          <input type="email" name="email" ngModel class="form-control" [(ngModel)]="currentUsers.email">
+        </div>
+        <div class="form-group">
+          <label name="control-label">Telephone</label>
+          <input type="text" name="telephone" ngModel class="form-control" [(ngModel)]="currentUsers.telephone">
+        </div>
+        <td>
+          <button class="btn btn-success" type="submit">Update User</button>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <button class="btn btn-success" (click)="onReturn()">Retour</button>
+        </td>
+      </form>
+    </div> -->
+    <p></p>
+    <!-- <div *ngIf="mode=='edit-user-pass'" class="col-md-9">
+      <form #f="ngForm" (ngSubmit)="onPassUpdateUser(f.value)">
+        <div class="form-group">
+          <label name="control-label">Username</label>
+          <input type="text" name="username" ngModel class="form-control" [(ngModel)]="currentUsers.username">
+        </div>
+        <div class="form-group">
+          <label name="control-label">Last Password</label>
+          <input type="text" name="lastpassword" ngModel class="form-control">
+        </div>
+        <div class="form-group">
+          <label name="control-label">Password</label>
+          <input type="text" name="password" ngModel class="form-control">
+        </div>
+        <td>
+          <button class="btn btn-success" type="submit">Update Password</button>
+        </td>
+        <td></td>
+        <td></td>
+        <td>
+          <button class="btn btn-success" (click)="onReturn()">Retour</button>
+        </td>
+      </form>
+    </div> -->
+    <p></p>
+    <div *ngIf="mode=='list'">
+
+      <p></p>
+      <p></p>
+      <h2 class="text-center">Liste des Serveurs</h2>
+      <p></p>
+      <p></p>
+      <table class="table table-dark table-striped">
+        <thead>
+          <tr>
+            <th>IdUrl</th>
+            <th>Name</th>
+            <th>Port</th>
+            <th>Adresse</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let u of urls | paginate: { itemsPerPage: count, currentPage: p }">
+            <td>{{u.idUrl}}</td>
+            <td>{{u.name}}</td>
+            <td>{{u.port}}</td>
+            <td>{{u.url}}</td>
+            <td>{{u.description}}</td>
+         
+          <td>
+            <button type="button" class="btn btn-success" (click)="onEditUrl(t)">Edit</button>
+        </td>
+    </tr>
+
+        </tbody>
+      </table>
+      <!--Including the pagination control.-->
+    <div class="text-right">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
+    </div>
+    
+  </div>
+
+</body>
+
+</html>

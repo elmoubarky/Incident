@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Gestion des Taches - Resolution des Incidents</h2>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Le menu permet de pourvoir resoudre les incidents declarés mais aussi
+            de pouvoir afficher la listes des incidents declarés</p>
+        <p></p>
+        <p></p>
+        <p></p>
+
+        <p></p>
+        <div *ngIf="mode=='resolved-tache'" class="d-flex justify-content-center align-items-center">
+            <form #f="ngForm" (ngSubmit)="onResolveTache(f.value)">
+                <div class="form-group" style="width: 500px">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <input type="hidden" name="numeroTache" ngModel class="form-control"
+                        [(ngModel)]="currentTaches.numeroTache">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Nature</label>
+                    <input type="text" name="nature" ngModel class="form-control" [(ngModel)]="currentTaches.nature"
+                        disabled>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control" [(ngModel)]="currentTaches.type"
+                        disabled>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Date Création</label>
+                    <input type="text" name="dateCreation" ngModel class="form-control"
+                        [(ngModel)]="currentTaches.dateCreation" disabled>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Status</label>
+                    <input type="text" name="status" ngModel class="form-control" [(ngModel)]="currentTaches.status"
+                        disabled>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Staff</label>
+                    <input type="text" name="staff" ngModel class="form-control" [(ngModel)]="currentTaches.staff">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Methode resolution</label>
+                    <textarea name="resolvedMethode" cols="10" rows="4" ngModel class="form-control"
+                        [(ngModel)]="currentTaches.resolvedMethode"></textarea>
+                </div>
+                <!-- <div class="form-group">
+                        <label name="control-label" >Equipement</label>
+                       <input type="text" name="equipement" ngModel class="form-control" [(ngModel)]="currentTaches.equipement" > 
+                   </div> -->
+
+                <button class="btn btn-success" type="submit">Resolve</button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="onReturn()">Retour</button>
+
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='list' || mode=='rech'">
+            <div class=" text-center">
+                <h5>Liste des differents exports pouvant etre fait</h5>
+                <button class="btn btn-success" (click)="download()"> Export CSV </button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="exportAsXLSX()"> Export Excel </button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="download()"> Export PDF </button>
+            </div>
+            <p></p>
+            <p></p>
+            <form  class="form-inline my-2 my-lg-0" (submit)="onRech(searchValue.value)">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <input #searchValue type="text" name="search" class="form-control" placeholder="Search by numero"
+                    aria-label="Search">
+                <label>&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Numero</button>
+            </form>
+            <p></p>
+            <p></p>
+            <div class="text-center">
+                <h2>Liste des Incidents en cours</h2>
+            </div>
+            <p></p>
+            <p></p>
+            <table class="table table-responsive-xl table-dark table-striped">
+                <thead>
+                    <tr>
+                        <th>Numero</th>
+                        <th>Nature</th>
+                        <th>Type</th>
+                        <th>Date Creation</th>
+                        <th>Status</th>
+                        <th>Staff</th>
+                        <th>Date Cloture</th>
+                        <th>Methode resolution</th>
+                        <th>Equipement</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mode=='list'">
+
+                    <tr *ngFor="let t of taches | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.numeroTache}}</td>
+                        <td>{{t.nature}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.dateCreation}}</td>
+                        <td>{{t.status}}</td>
+                        <td>{{t.staff}}</td>
+                        <td>{{t.dateCloture}}</td>
+                        <td style="width:300px; ">{{t.resolvedMethode}}</td>
+                        <td>{{t.equipement}}</td>
+
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditTache(t)">Resolve</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+                <tbody *ngIf="mode=='rech'">
+
+                    <tr *ngFor="let t of taches | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.numeroTache}}</td>
+                        <td>{{t.nature}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.dateCreation}}</td>
+                        <td>{{t.status}}</td>
+                        <td>{{t.staff}}</td>
+                        <td>{{t.dateCloture}}</td>
+                        <td style="width:300px; ">{{t.resolvedMethode}}</td>
+                        <td>{{t.equipement}}</td>
+
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditTache(t)">Resolve</button>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <!--Including the pagination control.-->
+        <div class="text-right">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

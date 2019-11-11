@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Gestion des Incidents - Enregistrement des Cartouches</h2>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Le menu permet de pourvoir ajouter une cartouche mais aussi
+            modifier les cartouches existant dans la liste ci dessous</p>
+        <p></p>
+        <p></p>
+        <div class=" text-center">
+            <button class="btn btn-success" (click)="onNewCart()">+ Ajouter une Cartouche</button>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='new-cart'" class="d-flex justify-content-center align-items-center">
+            <form #f="ngForm" (ngSubmit)="onSaveCart(f.value)">
+                <div class="form-group" style="width: 500px">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                    <label name="control-label">Custodian</label>
+                    <input name="custodian2" ngModel class="form-control" [(ngModel)]="username" disabled>
+                    <p></p>
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control">
+                    <label name="control-label">Qte Initiale</label>
+                    <input type="text" name="qteInitiale" ngModel class="form-control">
+                    <label name="control-label">Qte Restante</label>
+                    <input type="text" name="qteRestante" ngModel class="form-control">
+                    <label for="dateAppro" class="control-label ">Date Appro</label>
+                    <input class="form-control" type="text" placeholder="dd-MM-yyyy" id="dateAppro" name="dateAppro"
+                        ngModel class="form-control">
+                    <label name="control-label">Staff</label>
+                    <input type="text" name="staff" ngModel class="form-control">
+                    <label name="control-label">Type Imprim</label>
+                    <input type="text" name="typeImprim" ngModel class="form-control">
+                </div>
+                <button class="btn btn-success" type="submit">Save</button>
+                <label>&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="onReturn()">Retour</button>
+
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='edit-cart'" class="d-flex justify-content-center align-items-center">
+            <form #f="ngForm" (ngSubmit)="onUpdateCart(f.value)">
+                <div class="form-group" style="width: 500px">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <!-- <label name="control-label" >Numero</label> -->
+                    <input type="hidden" name="idCartouche" ngModel class="form-control"
+                        [(ngModel)]="currentCartouches.idCartouche">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control" [(ngModel)]="currentCartouches.type">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Qte Initiale</label>
+                    <input type="text" name="qteInitiale" ngModel class="form-control"
+                        [(ngModel)]="currentCartouches.qteInitiale">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Qte Restante</label>
+                    <input type="text" name="qteRestante" ngModel class="form-control"
+                        [(ngModel)]="currentCartouches.qteRestante">
+                </div>
+                <div class="form-group">
+                    <label for="dateAppro" class="col-2 col-form-label">Date Appro</label>
+                    <input class="form-control" type="text" name="dateAppro" ngModel class="form-control"
+                        [(ngModel)]="currentCartouches.dateAppro">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Staff</label>
+                    <input type="text" name="staff" ngModel class="form-control" [(ngModel)]="currentCartouches.staff">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type Imprm</label>
+                    <input type="text" name="typeImprim" ngModel class="form-control"
+                        [(ngModel)]="currentCartouches.typeImprim">
+                </div>
+
+                <button class="btn btn-success" type="submit">Update</button>
+                <label>&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="onReturn()">Retour</button>
+
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='list' || mode=='rech'">
+            <div class=" text-center">
+                <h5>Liste des differents exports pouvant etre fait</h5>
+                <button class="btn btn-success" (click)="download()"> Export CSV </button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="exportAsXLSX()"> Export Excel </button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="download()"> Export PDF </button>
+            </div>
+            <p></p>
+            <div class="text-center">
+                
+                <form #f="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onRech(f.value)">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+                    <input type="text" ngModel name="searchValue" class="form-control" placeholder="Search element"
+                        aria-label="Search">
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <div class="form-group">
+                        <select name="optionValue" ngModel class="form-control" id="option">
+                            <option>Type</option>
+                            <option>Date Appro</option>
+                            <option>Type Imprim</option>
+                        </select>
+                    </div>
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Option</button>
+                </form>
+            </div>
+            <p></p>
+            <p></p>
+            <div class="text-center">
+                <h2>Liste des Cartouches</h2>
+            </div>
+            <p></p>
+            <p></p>
+            <div class="text-right">
+            <table class="table table-responsive-xxl table-dark table-striped text-center">
+                <thead>
+                    <tr>
+                        <th>Id Cartouche</th>
+                        <th>Type Cartouche</th>
+                        <th>Qte Initiale</th>
+                        <th>Qte restante</th>
+                        <th>Date Approvision</th>
+                        <th>Staff</th>
+                        <th>Type Imprimante</th>
+                        <th>UserName</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mode=='list'">
+
+                    <tr *ngFor="let t of cartouches | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.idCartouche}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.qteInitiale}}</td>
+                        <td>{{t.qteRestante}}</td>
+                        <td>{{t.dateAppro}}</td>
+                        <td>{{t.staff}}</td>
+                        <td>{{t.typeImprim}}</td>
+                        <td>{{t.userName}}</td>
+                        
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditCart(t)">Edit</button>
+                        </td> 
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDeleteCart(t)">Del</button>
+                        </td> 
+                    </tr>
+
+                </tbody>
+                <tbody *ngIf="mode=='rech'">
+
+                    <tr *ngFor="let t of cartouches | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.idCartouche}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.qteInitiale}}</td>
+                        <td>{{t.qteRestante}}</td>
+                        <td>{{t.dateAppro}}</td>
+                        <td>{{t.staff}}</td>
+                        <td>{{t.typeImprim}}</td>
+                        <td>{{t.userName}}</td>
+
+                        <td>
+                                <button type="button" class="btn btn-success" (click)="onEditCart(t)">Edit</button>
+                            </td> 
+                            <td>
+                                <button type="button" class="btn btn-danger" (click)="onDeleteCart(t)">Del</button>
+                            </td> 
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+            <!--Including the pagination control.-->
+            <div class="text-right">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

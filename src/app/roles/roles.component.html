@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Unhcr Utilisateurs</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<p></p>
+<p></p>
+<div class="container">
+  <h2>Gestion des roles</h2>
+  <p>Le menu permet de pourvoir ajouter des roles mais aussi
+       modifier les roles existant dans la liste ci dessous</p>  
+       <p></p>
+       <p></p>  
+       <div>
+            <button class="btn btn-success" (click) ="onNewRole()">Nouveau Role</button>
+       </div>
+       <p></p>
+        <div *ngIf="mode=='new-role'" class="col-md-9">
+            <form #f="ngForm" (ngSubmit)="onSaveRole(f.value)">
+                <div class="form-group">
+                    <label name="control-label" >Role name</label>
+                    <input type="text" name="rolename" ngModel class="form-control">
+                </div>
+                <td>
+                <button class="btn btn-success" type="submit">Save</button>
+            </td>
+            <td></td>
+                <td>
+                <button class="btn btn-success" (click) ="onReturn()">Retour</button>
+            </td>
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='edit-role'" class="col-md-9">
+            <form #f="ngForm" (ngSubmit)="onUpdateRole(f.value)">
+                <div class="form-group">
+                    <label name="control-label" >Role name</label>
+                    <input type="text" name="rolename" ngModel class="form-control" [(ngModel)]="currentRoles.roleName"> 
+                </div>
+                    <td>
+                <button class="btn btn-success" type="submit">Update</button>
+            </td>
+            <td></td>
+            <td>
+                <button class="btn btn-success" (click) ="onReturn()">Retour</button>
+            </td>
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='list'">
+       
+       <p></p>
+       <p></p>  
+       <h2>Liste des Roles</h2>        
+       <p></p>
+       <p></p>  
+  <table class="table table-dark table-striped">
+    <thead>
+      <tr >
+          <th>Id Role</th>
+        <th>Role name</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let r of roles">
+        <td>{{r.id}}</td>
+        <td>{{r.roleName}}</td>
+        <td>
+                <button type="button" class="btn btn-danger" (click) ="onDeleteRole(r)">Delete</button>
+            </td>
+            <td>
+                <button type="button" class="btn btn-danger" (click) ="onEditRole(r)">Edit</button>
+            </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+</div>
+
+</body>
+</html>

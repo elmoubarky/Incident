@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container text-center">
+        <h2>Gestion des Incidents - Details de l'asset</h2>
+        <p>Le menu permet d'afficher le detail d'un asset</p>
+        <p></p>
+        <p></p>
+        <div *ngIf="currentAsset" class="col-md-9">
+            <form #f="ngForm" >
+                <div>
+                    <img class="img-thumbnail" [src]="incidentAPI+'/assetsQrcode/'+currentAsset.serialId" />
+                </div>
+                <p></p>
+                <p></p>
+                <div class="form-group">
+                    <label name="control-label">Id Asset : <span
+                            style="color:rgb(0, 0, 0)">{{currentAsset.idAsset}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Modele : <span
+                            style="color:black">{{currentAsset.modele}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type : <span style="color:black">{{currentAsset.type}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Status : <span
+                            style="color:black">{{currentAsset.status}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Custodian : <span
+                            style="color:black">{{currentAsset.custodian}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Bc : <span style="color:black">{{currentAsset.bc}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Serial Id : <span
+                            style="color:black">{{currentAsset.serialId}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Bureau : <span
+                            style="color:black">{{currentAsset.bureau}}</span></label>
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Observation : <span
+                            style="color:black">{{currentAsset.observation}}</span></label>
+                </div>
+                <td>
+                    <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                    </label>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                </td>
+                <p></p>
+                <p></p>
+
+            </form>
+        </div>
+
+    </div>
+</body>
+
+
+</html>

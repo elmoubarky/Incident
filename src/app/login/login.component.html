@@ -1,0 +1,42 @@
+<p></p>
+<p></p>
+<div>
+
+</div>
+
+<div class="container" style="width: 500px">
+    
+    <div class="card card-login mx-auto text-center ">
+        <div class="card-header mx-auto ">
+            <span> <img src="assets/images/unhcr.jpeg" class="w-75" alt="Logo"> </span><br/>
+                        <h3 class="text-center"> ICOAB </h3>
+                        <h3 class="text-center"> SECTION ICT </h3>
+                        <h3 class="text-center"> GESTIONNAIRE DES TACHES</h3>
+        </div>
+        <div class="card-body">
+            <form  #f="ngForm" (ngSubmit)="onLogin(f.value)">
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                    </div>
+                    <input type="text" name="username" ngModel class="form-control" 
+                    style="width: 200px" placeholder="Username">
+                </div>
+
+                <div class="input-group form-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fas fa-key"></i></span>
+                    </div>
+                    <input type="password" name="password" ngModel class="form-control" 
+                    style="width: 200px" placeholder="Password">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Login</button>
+
+            </form>
+        </div>
+        <div class="text-align:center">
+            <h5>{{this.messages}}</h5>
+        </div>
+    </div>
+</div>

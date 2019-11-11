@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Gestion des Taches - TRACKING</h2>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Le menu permet de pourvoir enregistrer un tracking mais aussi
+            modifier les tracking existant dans la liste ci dessous</p>
+        <p></p>
+        <p></p>
+        <div class=" text-center">
+            <button class="btn btn-success" (click)="onNewMat()">+ Enregistrer un Tracking</button>
+            
+        </div>
+        <p></p>
+        <div *ngIf="mode=='new-mat'" class="col-md-9">
+            <form #f="ngForm" (ngSubmit)="onSaveMat(f.value)">
+                <div class="form-group">
+                    <input type="hidden" name="userName" ngModel class="form-control" [(ngModel)]="username">
+                    <label name="control-label">Custodian</label>
+                    <input name="custodian2" ngModel class="form-control" [(ngModel)]="username" disabled>
+                    <p></p>
+                    <label name="control-label">Reference</label>
+                    <input type="text" name="reference" ngModel class="form-control">
+                    <label name="control-label">Destination</label>
+                    <input type="text" name="destination" ngModel class="form-control">
+                    <label name="control-label">Heure Depart</label>
+                    <input type="text" name="heureDepart" ngModel class="form-control" placeholder="HH:MM:SS">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control">
+                    <label name="control-label">Qualite</label>
+                    <input type="text" name="qualiteSignal" ngModel class="form-control">
+                    <label name="control-label">Heure Arrivee</label>
+                    <input type="text" name="heureArrive" ngModel class="form-control" placeholder="HH:MM:SS">
+                    
+                </div>
+               
+                    <button class="btn btn-success" type="submit">Save</button>
+                    <label >&nbsp;&nbsp;&nbsp;</label>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='edit-mat'" class="col-md-9">
+            <form #f="ngForm" (ngSubmit)="onUpdateMat(f.value)">
+                <div class="form-group">
+                    <input type="hidden" name="userName" ngModel class="form-control" 
+                    [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <!-- <label name="control-label" >Numero</label> -->
+                    <input type="hidden" name="idTracking" ngModel class="form-control"
+                        [(ngModel)]="currentTrackings.idTracking">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Reference</label>
+                    <input type="text" name="reference" ngModel class="form-control"
+                        [(ngModel)]="currentTrackings.reference">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Destination</label>
+                    <input class="form-control" type="text" name="destination" 
+                    ngModel class="form-control"  [(ngModel)]="currentTrackings.destination">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Heure Depart</label>
+                    <input type="text" name="heureDepart" ngModel class="form-control" 
+                    placeholder="HH:MM:SS" [(ngModel)]="currentTrackings.heureDepart">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control" 
+                    [(ngModel)]="currentTrackings.type">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Qualite</label>
+                    <input type="text" name="qualiteSignal" ngModel class="form-control" 
+                    [(ngModel)]="currentTrackings.qualiteSignal">
+                </div>
+                <div class="form-group">
+                        <label name="control-label">Heure Arrivee</label>
+                        <input type="text" name="heureArrive" ngModel class="form-control" placeholder="HH:MM:SS"
+                            [(ngModel)]="currentTrackings.heureArrive">
+                    </div>
+                
+                    <button class="btn btn-success" type="submit">Update</button>
+                    <label >&nbsp;&nbsp;&nbsp;</label>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='list' || mode=='rech'">
+                <div class=" text-center">
+                        <h5>Liste des differents exports pouvant etre fait</h5>
+                            <button class="btn btn-success" (click)="download()"> Export CSV </button>
+                            <label for="">&nbsp;&nbsp;&nbsp;</label>
+                            <button class="btn btn-success" (click)="exportAsXLSX()"> Export Excel </button>
+                            <label for="">&nbsp;&nbsp;&nbsp;</label>
+                            <button class="btn btn-success" (click)="download()"> Export PDF </button>
+                    </div>
+            <p></p>
+            <div class="text-center">
+                    <form #f="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onRech(f.value)">
+                            <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            </label>
+                        <input  type="text" ngModel name="searchValue" class="form-control" placeholder="Search element"
+                            aria-label="Search">
+                            <label >&nbsp;&nbsp;&nbsp;</label>
+                        <div class="form-group">
+                            <select name="optionValue" ngModel  class="form-control" id="option">
+                                <option>Reference</option>
+                                <option>Date Enreg</option>
+                                <option>Type</option>
+                            </select>
+                        </div>
+                        <label >&nbsp;&nbsp;&nbsp;</label>
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Option</button>
+                    </form>
+            </div>
+            
+            <p></p>
+            <p></p>
+            <div class="text-center">
+                    <h2>Liste des Tracking</h2>
+            </div>
+            
+            <p></p>
+            <p></p>
+            <div class="text-right">
+            <table class="table table-responsive-xxl table-dark table-striped ">
+                <thead>
+                    <tr>
+                        <th>N</th>
+                        <th>Reference</th>
+                        <th>Destination</th>
+                        <th>Heure Depart</th>
+                        <th>Type</th>
+                        <th>Qualite</th>
+                        <th>Heure Arrivee</th>
+                        <th>Duree</th>
+                        <th>Date Enregistrement</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mode=='list'">
+
+                    <tr *ngFor="let t of trackings | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.idTracking}}</td>
+                        <td>{{t.reference}}</td>
+                        <td>{{t.destination}}</td>
+                        <td>{{t.heureDepart}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.qualiteSignal}}</td>
+                        <td>{{t.heureArrive}}</td>
+                        <td>{{t.dureeTrajet}}</td>
+                        <td>{{t.dateEnreg}}</td>
+                        <td>{{t.userName}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditMat(t)">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDeleteMat(t)">Del</button>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+                <tbody *ngIf="mode=='rech'">
+
+                    <tr *ngFor="let t of trackings | paginate: { itemsPerPage: count, currentPage: p }">
+                            <td>{{t.idTracking}}</td>
+                        <td>{{t.reference}}</td>
+                        <td>{{t.destination}}</td>
+                        <td>{{t.heureDepart}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.qualiteSignal}}</td>
+                        <td>{{t.heureArrive}}</td>
+                        <td>{{t.dureeTrajet}}</td>
+                        <td>{{t.dateEnreg}}</td>
+                        <td>{{t.userName}}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditMat(t)">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDeleteMat(t)">Del</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+            <!--Including the pagination control.-->
+        <div class="text-right">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

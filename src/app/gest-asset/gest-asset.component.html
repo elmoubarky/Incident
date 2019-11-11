@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container">
+        <h2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Gestion des Taches - Enregistrement des Assets</h2>
+        <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            Le menu permet de pourvoir ajouter un asset mais aussi
+            modifier les assets existant dans la liste ci dessous</p>
+        <p></p>
+        <p></p>
+        <div class=" text-center">
+            <button class="btn btn-success" (click)="onNewAsset()">+ Ajouter un Asset</button>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='new-asset'" class="d-flex justify-content-center align-items-center">
+            <form #f="ngForm" (ngSubmit)="onSaveAsset(f.value)">
+                <div class="form-group">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                    <label name="control-label">UserName</label>
+                    <input name="username2" ngModel class="form-control" [(ngModel)]="username" disabled>
+                    <p></p>
+                    <label name="control-label">Modele</label>
+                    <input type="text" name="modele" ngModel class="form-control">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control">
+                    <label name="control-label">Bc</label>
+                    <input type="text" style="width: 500px" name="bc" ngModel class="form-control">
+                    <label name="control-label">Status</label>
+                    <select name="status" ngModel class="form-control" id="status">
+                        <option>DISPONIBLE</option>
+                        <option>ATTRIBUER</option>
+                        <option>EN STOCK</option>
+                        <option>EN PANNE</option>
+                        <option>DECLASSER</option>
+                        <option>EN MAINTENANCE</option>
+                    </select>
+                    <label for="dateAchat" class="col-2 col-form-label">Date Achat</label>
+                    <input class="form-control" type="text" placeholder="dd-MM-yyyy HH:MM:SS" id="dateAchat"
+                        name="dateAchat" ngModel class="form-control">
+                    <label name="control-label">Serial Id</label>
+                    <input type="text" name="serialId" ngModel class="form-control">
+                    <label name="control-label">Bureau</label>
+                    <input type="text" name="bureau" ngModel class="form-control">
+                    <label name="control-label">Custodian</label>
+                    <input type="text" name="custodian" ngModel class="form-control">
+                    <label name="control-label">Observation</label>
+                    <textarea name="observation" cols="5" rows="3" ngModel class="form-control"></textarea>
+                </div>
+                <td>
+                    <button class="btn btn-success" type="submit">Save</button>
+                </td>
+                <td></td>
+                <td>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                </td>
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='edit-asset'" class="col-md-9">
+            <form #f="ngForm" (ngSubmit)="onUpdateAsset(f.value)">
+                <div class="form-group">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <!-- <label name="control-label" >Numero</label> -->
+                    <input type="hidden" name="idAsset" ngModel class="form-control"
+                        [(ngModel)]="currentAssets.idAsset">
+                </div>
+                <div class="form-group">
+                    <!-- <label name="control-label" >Numero</label> -->
+                    <input type="hidden" name="custodian" ngModel class="form-control"
+                        [(ngModel)]="currentAssets.idAsset">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Modele</label>
+                    <input type="text" name="modele" ngModel class="form-control" [(ngModel)]="currentAssets.modele">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control" [(ngModel)]="currentAssets.type">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Bc</label>
+                    <input type="text" name="bc" ngModel class="form-control" [(ngModel)]="currentAssets.bc">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Status</label>
+                    <select name="status" ngModel class="form-control" [(ngModel)]="currentAssets.status">
+                        <option>DISPONIBLE</option>
+                        <option>ATTRIBUER</option>
+                        <option>EN STOCK</option>
+                        <option>EN PANNE</option>
+                        <option>DECLASSER</option>
+                        <option>EN MAINTENANCE</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="dateAchat" class="col-2 col-form-label">Date Achat</label>
+                    <input class="form-control" type="text" name="dateAchat" ngModel class="form-control"
+                        [(ngModel)]="currentAssets.dateAchat">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Serial Id</label>
+                    <input type="text" name="serialId" ngModel class="form-control"
+                        [(ngModel)]="currentAssets.serialId">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Bureau</label>
+                    <input type="text" name="bureau" ngModel class="form-control" [(ngModel)]="currentAssets.bureau">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Custodian</label>
+                    <input type="text" name="custodian" ngModel class="form-control"
+                        [(ngModel)]="currentAssets.custodian">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Observation</label>
+                    <textarea name="observation" cols="10" rows="3" ngModel class="form-control"
+                        [(ngModel)]="currentAssets.observation"></textarea>
+                </div>
+                <td>
+                    <button class="btn btn-success" type="submit">Update</button>
+                </td>
+                <td></td>
+                <td>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                </td>
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='list' || mode=='rech'">
+            <div class=" text-center">
+                <h5>Liste des differents exports pouvant etre fait</h5>
+                <button class="btn btn-success" (click)="download()"> Export CSV </button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="exportAsXLSX()"> Export Excel </button>
+                <label for="">&nbsp;&nbsp;&nbsp;</label>
+                <button class="btn btn-success" (click)="download()"> Export PDF </button>
+            </div>
+            <p></p>
+            <H5><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                Rechercher l'asset En fonction du QrCode</H5>
+            <form class="form-inline my-2 my-lg-0 text-center">
+                <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </label>
+                <div class="form-group ">
+                    <label>&nbsp;&nbsp;QrCode : &nbsp;&nbsp;</label>
+                    <input type="file" (change)="onSelectedFile($event)">
+                    <label>&nbsp;&nbsp;</label>
+                    <button class="btn btn-success" (click)="onSearchQrcode()">Search By QrCode</button>
+                    {{progress}}
+                </div>
+
+            </form>
+            <p></p>
+            <p></p>
+            <p></p>
+            <div class="text-center">
+                
+                <form #f="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onRech(f.value)">
+                    <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+                    <input ngModel type="text" name="searchValue" class="form-control" placeholder="Search element"
+                        aria-label="Search">
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <div class="form-group ">
+                        <select ngModel name="optionValue" class="form-control" id="optionValue">
+                            <option>Serial Id</option>
+                            <option>Modele</option>
+                            <option>Type</option>
+                            <option>Bc</option>
+                            <option>Bureau</option>
+                            <option>Custodian</option>
+                        </select>
+                    </div>
+                    <label>&nbsp;&nbsp;&nbsp;</label>
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search By Option</button>
+                </form>
+            </div>
+            <p></p>
+            <p></p>
+            <div class="text-center">
+                <h2>Liste des Assets</h2>
+            </div>
+            <p></p>
+            <p></p>
+            <div class="text-center">
+            <table class="table table-responsive-xxl table-dark table-striped col-md-6">
+                <thead>
+                    <tr>
+                        <th>id</th>
+                        <th>Modele</th>
+                        <th>type</th>
+                        <th>bc</th>
+                        <th>serial Id</th>
+                        <th>Custodian</th>
+                        <th>Date Achat</th>
+                        <th>Date Creation</th>
+                        <th>Date Maint</th>
+                        <th>Status</th>
+                        <th>Bureau</th>
+                        <th>Obs</th>
+                    </tr>
+                </thead>
+                <tbody *ngIf="mode=='list'">
+
+                    <tr *ngFor="let t of assets | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.idAsset}}</td>
+                        <td>{{t.modele}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.bc}}</td>
+                        <td>{{t.serialId}}</td>
+                        <td>{{t.custodian}}</td>
+                        <td>{{t.dateAchat}}</td>
+                        <td>{{t.dateEnreg}}</td>
+                        <td>{{t.dateMaintenance}}</td>
+                        <td>{{t.status}}</td>
+                        <td>{{t.bureau}}</td>
+                        <td>{{t.observation}}</td>
+                        <!-- <td>
+              <img src="assets/images/{{t.numeroTache}}.png" width="100" height="100">
+            </td> -->
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditAsset(t)">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDeleteAsset(t)">Del</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onAssetDetails(t)">Detail</button>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+                <tbody *ngIf="mode=='rech'">
+
+                    <tr *ngFor="let t of assets | paginate: { itemsPerPage: count, currentPage: p }">
+                        <td>{{t.idAsset}}</td>
+                        <td>{{t.modele}}</td>
+                        <td>{{t.type}}</td>
+                        <td>{{t.bc}}</td>
+                        <td>{{t.serialId}}</td>
+                        <td>{{t.custodian}}</td>
+                        <td>{{t.dateAchat}}</td>
+                        <td>{{t.dateEnreg}}</td>
+                        <td>{{t.dateMaintenance}}</td>
+                        <td>{{t.status}}</td>
+                        <td>{{t.bureau}}</td>
+                        <td>{{t.observation}}</td>
+                        <!-- <td>
+              <img src="assets/images/{{t.numeroTache}}.png" width="100" height="100">
+            </td> -->
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onAssetDetails(t)">Detail</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDeleteAsset(t)">Delete</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onEditAsset(t)">Edit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+            <!--Including the pagination control.-->
+            <div class="text-right">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

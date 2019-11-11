@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container">
+        <h2>Gestion des Taches - Enregistrement des Operations d'Achat</h2>
+        <p>Le menu permet de pourvoir ajouter une operation d'achat mais aussi
+            modifier les operations d'achats existant dans la liste ci dessous</p>
+        <p></p>
+        <p></p>
+        <div class=" text-center" >
+            <button class="btn btn-success" (click)="onNewOper()">+ Ajouter une Operation</button>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='new-oper'" class="col-md-9 ">
+            <form #f="ngForm" (ngSubmit)="onSaveOper(f.value)">
+                <div class="form-group">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                    <label name="control-label">Custodian</label>
+                    <input name="custodian2" ngModel class="form-control" [(ngModel)]="username" 
+                    disabled style="width: 600px">
+                    <p></p>
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control" style="width: 600px">
+                    <p></p>
+                    <label name="control-label">Req Id</label>
+                    <input type="text" name="reqId" ngModel class="form-control" style="width: 600px">
+                    <p></p>
+                    <label name="control-label">Po Nb</label>
+                    <input type="text" name="poNb" ngModel class="form-control" style="width: 600px">
+                    <p></p>
+                    <label name="control-label">Montant</label>
+                    <input type="text" name="montant" ngModel class="form-control" style="width: 200px">
+                    <p></p>
+                    <label name="control-label">Detail</label>
+                    <input type="text" name="detail" ngModel class="form-control" style="width: 600px;
+                     height: 50px;">
+                    <p></p>
+                    <label name="control-label">Statut</label>
+                    <select name="statut" ngModel class="form-control" id="statut" style="width: 200px">
+                        <option>CIV</option>
+                        <option>HQSMS</option>
+                    </select>
+                    
+                </div>
+                
+                    <button class="btn btn-success" type="submit">Save</button>
+                <label >&nbsp;&nbsp;&nbsp;</label>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+               
+            </form>
+        </div>
+        <p></p>
+       <!--  <div *ngIf="mode=='attach' && currentOperations==o" class="col-md-9">
+            <div >
+                <div class="panel panel-default">
+                    <h4> Operation Achat : {{o.idOperation}} {{o.detail}}</h4>
+                    <h4> Date : {{o.dateEnreg}} </h4>
+                    <h4> Montant : {{o.montant}} </h4>
+                    <p></p>
+                    <p></p>
+                    <div class="panel-body">
+                        <label name="control-label">Attachement : </label>
+                        <p *ngIf="editAttachement && currentOperations==o">
+
+                            <input type="file" (change)="onSelectedFile($event)">
+                            <label >&nbsp;&nbsp;</label>
+                            <button class="btn btn-success" (click)="onUploadAttachement()">Upload</button>
+                            {{progress}}
+                        </p>
+                            <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <p></p>
+        <div *ngIf="mode=='edit-oper'" class="col-md-9">
+            <form #f="ngForm" (ngSubmit)="onUpdateOper(f.value)">
+                <div class="form-group">
+                    <input type="hidden" name="username" ngModel class="form-control" [(ngModel)]="username">
+                </div>
+                <div class="form-group">
+                    <!-- <label name="control-label" >Numero</label> -->
+                    <input type="hidden" name="idOperation" ngModel class="form-control"
+                        [(ngModel)]="currentOperations.idOperation">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Type</label>
+                    <input type="text" name="type" ngModel class="form-control" [(ngModel)]="currentOperations.type">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Req Id</label>
+                    <input type="text" name="reqId" ngModel class="form-control" [(ngModel)]="currentOperations.reqId">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">PoNb</label>
+                    <input type="text" name="poNb" ngModel class="form-control" [(ngModel)]="currentOperations.poNb">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Montant</label>
+                    <input type="text" name="montant" ngModel class="form-control"
+                        [(ngModel)]="currentOperations.montant">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Detail</label>
+                    <input type="text" name="detail" ngModel class="form-control"
+                        [(ngModel)]="currentOperations.detail">
+                </div>
+                <div class="form-group">
+                    <label name="control-label">Status</label>
+                    <select name="statut" ngModel class="form-control" [(ngModel)]="currentOperations.statut">
+                        <option>CIV</option>
+                        <option>HQSMS</option>
+                    </select>
+                </div>
+                <!-- <div class="form-group">
+                    <label name="control-label">Attachement</label>
+                    <input type="text" name="attachement" ngModel class="form-control"
+                        [(ngModel)]="currentOperations.attachement">
+                </div> -->
+                <td>
+                    <button class="btn btn-success" type="submit">Update</button>
+                </td>
+                <label >&nbsp;&nbsp;&nbsp;</label>
+                <td>
+                    <button class="btn btn-success" (click)="onReturn()">Retour</button>
+                </td>
+            </form>
+        </div>
+        <p></p>
+        <div *ngIf="mode=='list' || mode=='rech'" class="text-center">
+                <div class=" text-center">
+                        <h5>Liste des differents exports pouvant etre fait</h5>
+                            <button class="btn btn-success" (click)="download()"> Export CSV </button>
+                            <label for="">&nbsp;&nbsp;&nbsp;</label>
+                            <button class="btn btn-success" (click)="exportAsXLSX()"> Export Excel </button>
+                            <label >&nbsp;&nbsp;&nbsp;</label>
+                            <button class="btn btn-success" (click)="download()"> Export PDF </button>
+                    </div>
+            <p></p>
+            <H5>Rechercher le montant des operations en fonction des dates</H5>
+            <p></p>
+        <form #f="ngForm" class="form-inline my-2 my-lg-0"  (ngSubmit)="onRechDate(f.value)">
+                <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <div class="form-group ">
+                <label >&nbsp;&nbsp;Date debut : &nbsp;&nbsp;</label>
+                <input ngModel  type="date" name="date1" max="3000-12-31" min="1800-01-01"
+                 class="form-control">
+            </div>
+            <label >&nbsp;&nbsp;</label>
+            <div class="form-group ">
+                    <label >&nbsp;&nbsp;Date Fin : &nbsp;&nbsp;</label>
+                    <input ngModel type="date" name="date2" max="3000-12-31" min="1800-01-01"
+                     class="form-control">
+                </div>
+                <label >&nbsp;&nbsp;&nbsp;</label>
+                <input  type="text" name="montant" class="form-control" placeholder="0" 
+                value="{{montant}}" disabled>
+                <label >&nbsp;&nbsp;&nbsp;</label>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search by Dates</button>
+        </form>
+        <p></p>
+        <p></p>
+        <H5>Rechercher les operations en fonction du type, ReqId et PoNb</H5>
+        <p></p>
+        <form #f1="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onRech(f1.value)">
+                <label >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </label>
+            <input type="text" ngModel name="searchValue" class="form-control" placeholder="Search element"
+                aria-label="Search">
+                <label >&nbsp;&nbsp;&nbsp;</label>
+            <div class="form-group ">
+                <select name="optionValue" ngModel class="form-control" id="optionValue">
+                    <option>Type</option>
+                    <option>Req Id</option>
+                    <option>PoNb</option>
+                </select>
+            </div>
+            <label >&nbsp;&nbsp;&nbsp;</label>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search by Elements</button>
+        </form>
+        <p></p>
+
+        <p></p>
+        <h2>Liste des Operations d'Achat</h2>
+        <p></p>
+        <p></p>
+        <div class="text-right">
+        <table class="table table-responsive-xxl table-dark table-striped col-md-6">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Type</th>
+                    <th>ReqId</th>
+                    <th>PoNb</th>
+                    <th>Montant</th>
+                    <th>Detail</th>
+                    <th>Statut</th>
+                    <th>Attachement</th>
+                    <th>Date Enreg</th>
+                    <th>UserName</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="mode=='list'">
+
+                <tr *ngFor="let t of operations">
+                    <td>{{t.idOperation}}</td>
+                    <td>{{t.type}}</td>
+                    <td>{{t.reqId}}</td>
+                    <td>{{t.poNb}}</td>
+                    <td>{{t.montant}}</td>
+                    <td>{{t.detail}}</td>
+                    <td>{{t.statut}}</td>
+                    <td>{{t.attachement}}</td>
+                    <td>{{t.dateEnreg}}</td>
+                    <td>{{t.userName}}</td>
+                    <td>
+                        <button type="button" class="btn btn-success" (click)="onEditOper(t)">Edit</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-success" (click)="onOperationAttach(t)">Attachement</button>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-danger" (click)="onDeleteOper(t)">Delete</button>
+                    </td>
+
+                </tr>
+
+            </tbody>
+            <tbody *ngIf="mode=='rech'">
+
+                <tr *ngFor="let t of operations | paginate: { itemsPerPage: count, currentPage: p }">
+                    <td>{{t.idOperation}}</td>
+                    <td>{{t.type}}</td>
+                    <td>{{t.reqId}}</td>
+                    <td>{{t.poNb}}</td>
+                    <td>{{t.montant}}</td>
+                    <td>{{t.detail}}</td>
+                    <td>{{t.statut}}</td>
+                    <td>{{t.attachement}}</td>
+                    <td>{{t.dateEnreg}}</td>
+                    <td>{{t.userName}}</td>
+                    <td>
+                            <button type="button" class="btn btn-success" (click)="onEditOper(t)">Edit</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-success" (click)="onOperationAttach(t)">Attachement</button>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-danger" (click)="onDeleteOper(t)">Delete</button>
+                        </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+        <!--Including the pagination control.-->
+        <div class="text-right">
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>

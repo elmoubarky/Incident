@@ -1,0 +1,97 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+  <a class="navbar-brand" href="#">
+    <img class="logo"src="assets/images/unhcr.jpeg" height="40" >
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul *ngIf="isAuthenticated()"  class="navbar-nav mr-auto">
+      <li class="nav-item dropdown active">
+        <a *ngIf="isAdmin()" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Administration
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a *ngIf="isAdmin()" routerLink="/users" class="dropdown-item" href="#">Utilisateurs</a>
+           </div>
+      </li>
+      <li class="nav-item dropdown active">
+          <a *ngIf="isAdmin()" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" 
+          role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Statistiques
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a *ngIf="isAdmin()" class="dropdown-item" routerLink="/stats">Bar Chat</a>
+            <a *ngIf="isAdmin()" class="dropdown-item" routerLink="/doughnut" >Doughnut Chart</a>
+            <a *ngIf="isAdmin()" class="dropdown-item" routerLink="/radar" >Radar Chart</a>
+            <a *ngIf="isAdmin()" class="dropdown-item" routerLink="/pie" >Pie Chart</a>
+          </div>
+        </li>
+      <!--<li *ngIf="isAdmin()" class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Suivi
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Tableau de Suivi</a>
+        </div>
+      </li>-->
+      <li class="nav-item dropdown active">
+        <a *ngIf="isAdmin()" class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Incident
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a *ngIf="isAdmin()" class="dropdown-item" routerLink="/taches">Declaration D'Incident</a>
+          <a *ngIf="isAdmin()" class="dropdown-item" routerLink="/resolved" >Resolution D'Incident</a>
+        </div>
+      </li>
+      <!-- <li class="nav-item dropdown active">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Bon de Commande
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" *ngIf="isAdmin()" routerLink="bc/admin" >Admin</a>
+          <a class="dropdown-item" *ngIf="isAdmin()" routerLink="bc/etat">Etat</a>
+          <a class="dropdown-item" *ngIf="isAdmin()" routerLink="bc/reception">Reception</a>
+          <a class="dropdown-item" *ngIf="isAdmin()" routerLink="bc/finance">Finances</a>
+        </div>
+      </li> -->
+      <li class="nav-item">
+        <a *ngIf="isAdmin()" class="nav-link active" routerLink="/cartouches">Cartouches</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" routerLink="/tracking">Tracking</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="isAdmin()" class="nav-link active" routerLink="/assets" >Assets</a>
+      </li>
+      <li class="nav-item">
+        <a *ngIf="isAdmin()" class="nav-link active" routerLink="/operation">Operation Achats</a>
+      </li>
+    </ul>
+    <li *ngIf="isAuthenticated()" class="nav-item">
+      <a class="btn ml-2 btn-warning" (click)="logOut()">Deconnexion</a>
+    </li>
+    
+  </div>
+</nav>
+
+      <!-- afficher le formulaire login -->
+      <a *ngIf="!isAuthenticated()" class="col-md-9">
+      <app-login></app-login>
+    </a>
+  
+ <div class="text-center">
+    <router-outlet></router-outlet>
+ </div>
+ <footer class="page-footer font-small blue pt-4">
+  <div class="footer-copyright text-center py-3">@ 2019 Copyright 
+      <a class="navbar-brand" href="https://www.unhcr.org/">
+          <img class="logo"src="assets/images/unhcr.jpeg" height="40" >
+        </a>
+
+  </div>
+ </footer>
+   
+ 
+ 

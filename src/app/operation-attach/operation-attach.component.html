@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Unhcr Taches</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <p></p>
+    <p></p>
+    <div class="container text-center">
+        <h2>Gestion des Incidents - Enregistrement des Operations d'Achat</h2>
+        <p>Le menu permet d'ajouter un attachement a une Operation d'achat</p>
+        <p></p>
+        <p></p>
+        <div *ngIf="currentOperation" class="col-md-9">
+            <div class="text-center">
+                <div class="panel panel-default">
+                    <h4> Operation Achat : {{currentOperation.idOperation}} {{currentOperation.detail}}</h4>
+                    <h4> Date : {{currentOperation.dateEnreg}} </h4>
+                    <h4> Montant : {{currentOperation.montant}} </h4>
+                    <p></p>
+                    <p></p>
+                    <div class="panel-body">
+                        <label name="control-label">Add Attachement : </label>
+                        <p>
+                            <input type="file" (change)="onSelectedFile($event)">
+                            <label>&nbsp;&nbsp;</label>
+                            <button class="btn btn-success" (click)="onUploadAttachement()">Add Attachement</button>
+                            {{progress}}
+                        </p>
+                        <button class="btn btn-success" (click)="onValide()">Retour</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+
+</html>
